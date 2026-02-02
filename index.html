@@ -5,30 +5,56 @@
     <title>Yazılım Günlüğüm</title>
 </head>
 <body>
-    <h1>Merhaba, Fullstack Yolculuğum Başladı!</h1>
-    <p>Bugün HTML'in temel iskelet yapısını öğrendim.</p>
-    
-    <ul>
-        <li><strong>head:</strong> Sayfa hakkındaki bilgileri içerir.</li>
-        <li><strong>body:</strong> Kullanıcının gördüğü kısımdır.</li>
-        <li><strong>h1-h6:</strong> Başlık etiketleridir.</li>
-    </ul>
+    <header>
+        <h1>Yazılım Öğrenme Yolculuğum</h1>
+        <nav>
+            <a href="#ogrendiklerim">Neler Öğrendim?</a> | 
+            <a href="#ders-programi">Ders Programım</a>
+        </nav>
+    </header>
 
-    <hr> <h2>Etkileşimli Elemanlar</h2>
-    
-    <img src="https://via.placeholder.com/150" alt="Örnek Resim">
+    <main>
+        <section id="ogrendiklerim">
+            <h2>Bugünün Konusu: Semantik ve Tablolar</h2>
+            <article>
+                <h3>Semantik Neden Önemli?</h3>
+                <p>Kodun okunabilirliğini artırır ve SEO (Arama Motoru Optimizasyonu) için kritiktir.</p>
+            </article>
+        </section>
 
-    <p>Daha fazla bilgi için <a href="https://developer.mozilla.org/tr/docs/Web/HTML" target="_blank">MDN Web Docs</a> ziyaret edebilirsin.</p>
+        <section id="ders-programi">
+            <h2>Haftalık Çalışma Planım</h2>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Gün</th>
+                        <th>Konu</th>
+                        <th>Durum</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Pazartesi</td>
+                        <td>Git & GitHub</td>
+                        <td>✅ Tamamlandı</td>
+                    </tr>
+                    <tr>
+                        <td>Salı</td>
+                        <td>HTML Temelleri</td>
+                        <td>✅ Tamamlandı</td>
+                    </tr>
+                    <tr>
+                        <td>Çarşamba</td>
+                        <td>Semantik & Tablolar</td>
+                        <td>⏳ Devam Ediyor</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
 
-    <h3>Bana Ulaşın</h3>
-    <form>
-        <label for="isim">Adınız:</label>
-        <input type="text" id="isim" placeholder="Adınızı yazın...">
-        
-        <label for="email">E-posta:</label>
-        <input type="email" id="email" required>
-        
-        <button type="submit">Gönder</button>
-    </form>
+    <footer>
+        <p>&copy; 2026 Fullstack Yolculuğu Notları</p>
+    </footer>
 </body>
 </html>
