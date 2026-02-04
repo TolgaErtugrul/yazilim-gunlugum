@@ -73,3 +73,39 @@ section {
     flex: 1;         /* Bölümlerin eşit alan kaplamasını sağla */
     min-width: 300px; /* Çok küçülürlerse alt alta geçsinler */
 }
+
+button {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease; /* Yumuşak geçiş */
+}
+
+button:hover {
+    background-color: #2980b9; /* Üzerine gelince koyulaş */
+    transform: scale(1.05);    /* Çok hafif büyüme efekti */
+}
+
+/* Ekran genişliği 768px'den küçükse (Tablet ve Telefonlar için) */
+@media (max-width: 768px) {
+    main {
+        flex-direction: column; /* Yan yana olan bölümleri alt alta getir */
+    }
+
+    nav {
+        flex-direction: column; /* Menü linklerini alt alta diz */
+        align-items: center;
+    }
+
+    section {
+        width: 100%; /* Bölümler tüm genişliği kaplasın */
+    }
+
+    table {
+        display: block;
+        overflow-x: auto; /* Tablo geniş gelirse sağa kaysın, taşmasın */
+    }
+}
