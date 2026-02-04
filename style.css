@@ -32,3 +32,44 @@ th {
     background-color: #3498db;
     color: white;
 }
+
+/* Menü linklerini yan yana dizelim */
+nav {
+    display: flex;
+    justify-content: center; /* Merkeze al */
+    gap: 20px;               /* Linkler arası boşluk */
+    background: #2c3e50;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Form elemanlarını düzenli bir kutuya alalım */
+form {
+    display: flex;
+    flex-direction: column; /* Üst üste dizilsinler */
+    max-width: 300px;       /* Form çok genişlemesin */
+    gap: 10px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Hafif gölge */
+}
+
+/* Masaüstü görünümü için yan yana dizilim örneği */
+main {
+    display: flex;
+    flex-wrap: wrap; /* Ekran daralırsa alt satıra geç */
+    gap: 30px;
+    margin-top: 20px;
+}
+
+section {
+    flex: 1;         /* Bölümlerin eşit alan kaplamasını sağla */
+    min-width: 300px; /* Çok küçülürlerse alt alta geçsinler */
+}
