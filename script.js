@@ -25,3 +25,28 @@ function selamlamaVer() {
         console.log("Yeni kullanıcı selamlandı: " + kullaniciIsmi);
     }
 }
+
+function gorevEkle() {
+    const input = document.getElementById("todoInput");
+    const yeniGorev = input.value;
+
+    if (yeniGorev === "") {
+        alert("Lütfen bir görev yazın!");
+        return;
+    }
+
+    const liste = document.getElementById("gorevListesi");
+
+    // Yeni bir liste öğesi (li) oluştur
+    const li = document.createElement("li");
+    li.innerHTML = `
+        <span>${yeniGorev}</span>
+        <button class="sil-btn" onclick="this.parentElement.remove()">Sil</button>
+    `;
+
+    // Listeye ekle
+    liste.appendChild(li);
+
+    // Kutuyu temizle
+    input.value = "";
+}
