@@ -1,12 +1,21 @@
-const http = require('http');
+const express = require('express');
+const app = express();
+const PORT = 3000;
 
-const server = http.createServer((req, res) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    res.end('Merhaba Dunya! Burasi benim ilk Backend sunucum.');
+// Sunucumuzun dışarıdan (frontend'den) gelen verileri anlaması için
+app.use(express.json());
+
+// Ana sayfa isteği (localhost:3000'e girince çalışır)
+app.get('/', (req, res) => {
+    res.send('Express Sunucusu Canavar Gibi Çalışıyor! 🚀');
 });
 
-const PORT = 3000;
-server.listen(PORT, () => {
-    console.log(`Sunucu http://localhost:${PORT} adresinde calismaya basladi!`);
+// To-Do verilerini alacağımız bir "kapı" (Route) hazırlayalım
+app.get('/api/tasks', (req, res) => {
+    const ornekGorevler = ["Node.js Ogren", "Express Kur", "Fullstack Ol"];
+    res.json(ornekGorevler);
+});
+
+app.listen(PORT, () => {
+    console.log(`Sunucu http://localhost:${PORT} üzerinde aktif!`);
 });
