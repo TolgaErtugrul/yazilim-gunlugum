@@ -47,6 +47,33 @@ function gorevEkle() {
     // Listeye ekle
     liste.appendChild(li);
 
+    verileriKaydet();
+
     // Kutuyu temizle
     input.value = "";
 }
+
+function verileriKaydet() {
+    const liste = document.getElementById("gorevListesi");
+    // Tüm görev yazılarını bir diziye (array) çevirelim
+    const gorevler = [];
+    liste.querySelectorAll("li span").forEach(span => {
+        gorevler.push(span.innerText);
+    });
+    // Diziyi metne çevirip (JSON) hafızaya atalım
+    localStorage.setItem("benimGorevlerim", JSON.stringify(gorevler));
+}
+
+window.onload = function() {
+    const kaydedilenler = localStorage.getItem("benimGorevlerim");
+    if (kaydedilenler) {
+        const gorevDizisi = JSON.parse(kaydedilenler);
+        const liste = document.getElementById("gorevListesi");
+        
+        gorevDizisi.forEach(gorevMetni => {
+            const li = document.createElement("li");
+            li.innerHTML = `<span>${gorevMetni}</span><button class="sil-btn" onclick="this.parentElement.remove(); verileriKaydet();">Sil</button>`;
+            liste.appendChild(li);
+        });
+    }
+};
