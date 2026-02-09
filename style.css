@@ -1,30 +1,51 @@
 :root {
-    /* Aydınlık Mod Renkleri (Varsayılan) */
+    /* Aydınlık Mod */
     --bg-color: #f4f4f4;
-    --text-color: #333;
+    --text-color: #333333;
     --header-bg: #2c3e50;
+    --header-text: #ffffff;
     --card-bg: #ffffff;
     --accent-color: #3498db;
 }
 
 /* Karanlık Mod Renkleri (Bu sınıf gövdeye eklenince aktif olacak) */
 body.dark-theme {
+    /* Karanlık Mod */
     --bg-color: #1a1a1a;
     --text-color: #f4f4f4;
     --header-bg: #000000;
+    --header-text: #f1c40f;
     --card-bg: #2d2d2d;
-    --accent-color: #f1c40f; /* Karanlıkta sarı daha iyi görünür */
+    --accent-color: #f1c40f;
 }
 
-/* Şimdi mevcut CSS kodlarındaki sabit renkleri bu değişkenlerle değiştir */
+/* GENEL AYARLAR - Sabit renkleri kaldırıp değişkenleri bağlıyoruz */
 body {
-    background-color: var(--bg-color);
+    background-color: var(--bg-color) !important; /* !important ile kesinlik kazandırıyoruz */
     color: var(--text-color);
-    transition: background 0.3s, color 0.3s; /* Geçiş yumuşak olsun */
+    font-family: 'Segoe UI', sans-serif;
+    transition: all 0.3s ease;
+    margin: 0;
+    padding: 20px;
 }
 
-header { background-color: var(--header-bg); }
-#todo-section, form { background: var(--card-bg); }
+header {
+    background-color: var(--header-bg);
+    color: var(--header-text); /* Başlık rengini değişkene bağladık */
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* Kart yapıları (Form ve Todo List) */
+#todo-section, form, section {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
 
 /* Tüm sayfa için genel ayarlar */
 body {
@@ -44,10 +65,12 @@ h1, h2 {
 }
 
 /* Tabloyu modernleştirelim */
+/* Tabloyu da karanlık moda uyumlu yapalım */
 table {
     width: 100%;
-    border-collapse: collapse; /* Çift çizgileri kaldırır */
-    background: white;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border-collapse: collapse;
 }
 
 th, td {
@@ -57,8 +80,12 @@ th, td {
 }
 
 th {
-    background-color: #3498db;
+    background-color: var(--accent-color);
     color: white;
+}
+
+td {
+    border-bottom: 1px solid #555; /* Karanlıkta da görünen ince çizgi */
 }
 
 /* Menü linklerini yan yana dizelim */
