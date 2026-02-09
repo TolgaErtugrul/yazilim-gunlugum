@@ -77,3 +77,29 @@ window.onload = function() {
         });
     }
 };
+
+function temaDegistir() {
+    const body = document.body;
+    const buton = document.getElementById("theme-toggle");
+
+    // "dark-theme" sınıfını varsa siler, yoksa ekler
+    body.classList.toggle("dark-theme");
+
+    // Seçimi hafızaya kaydet
+    if (body.classList.contains("dark-theme")) {
+        localStorage.setItem("tema", "karanlik");
+        buton.innerText = "☀️ Aydınlık Mod";
+    } else {
+        localStorage.setItem("tema", "aydinlik");
+        buton.innerText = "🌙 Karanlık Mod";
+    }
+}
+
+// Sayfa açıldığında hafızadaki temayı kontrol et
+window.addEventListener("DOMContentLoaded", () => {
+    const kaydedilenTema = localStorage.getItem("tema");
+    if (kaydedilenTema === "karanlik") {
+        document.body.classList.add("dark-theme");
+        document.getElementById("theme-toggle").innerText = "☀️ Aydınlık Mod";
+    }
+});
