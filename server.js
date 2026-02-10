@@ -1,21 +1,22 @@
 const express = require('express');
+const cors = require('cors'); // CORS'u içeri al
 const app = express();
 const PORT = 3000;
 
-// Sunucumuzun dışarıdan (frontend'den) gelen verileri anlaması için
+app.use(cors()); // Tüm isteklere izin ver (Geliştirme aşaması için)
 app.use(express.json());
 
-// Ana sayfa isteği (localhost:3000'e girince çalışır)
-app.get('/', (req, res) => {
-    res.send('Express Sunucusu Canavar Gibi Çalışıyor! 🚀');
-});
+// Sunucuda saklanan geçici veri (Veritabanı gelene kadar burada)
+let gorevler = [
+    { id: 1, metin: "Backend'den gelen ilk görev" },
+    { id: 2, metin: "Fetch API öğreniliyor" }
+];
 
-// To-Do verilerini alacağımız bir "kapı" (Route) hazırlayalım
+// Görevleri listeleme (GET)
 app.get('/api/tasks', (req, res) => {
-    const ornekGorevler = ["Node.js Ogren", "Express Kur", "Fullstack Ol"];
-    res.json(ornekGorevler);
+    res.json(gorevler);
 });
 
 app.listen(PORT, () => {
-    console.log(`Sunucu http://localhost:${PORT} üzerinde aktif!`);
+    console.log(`Sunucu http://localhost:${PORT} üzerinde hazır!`);
 });

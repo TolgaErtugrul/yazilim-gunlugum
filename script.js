@@ -103,3 +103,25 @@ window.addEventListener("DOMContentLoaded", () => {
         document.getElementById("theme-toggle").innerText = "☀️ Aydınlık Mod";
     }
 });
+
+async function sunucudanGorevleriGetir() {
+    try {
+        // Sunucuya istek at
+        const cevap = await fetch('http://localhost:3000/api/tasks');
+        const veriler = await cevap.json();
+
+        const liste = document.getElementById("gorevListesi");
+        
+        // Gelen verileri ekrana bas
+        veriler.forEach(gorev => {
+            const li = document.createElement("li");
+            li.innerHTML = `<span>${gorev.metin}</span><button class="sil-btn">Sil</button>`;
+            liste.appendChild(li);
+        });
+    } catch (hata) {
+        console.error("Veri çekilirken hata oluştu:", hata);
+    }
+}
+
+// Sayfa yüklendiğinde bu fonksiyonu çalıştır
+window.addEventListener("DOMContentLoaded", sunucudanGorevleriGetir);
