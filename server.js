@@ -17,6 +17,26 @@ app.get('/api/tasks', (req, res) => {
     res.json(gorevler);
 });
 
+// Yeni görev ekleme (POST)
+app.post('/api/tasks', (req, res) => {
+    const yeniGorevMetni = req.body.metin;
+    
+    if (!yeniGorevMetni) {
+        return res.status(400).json({ hata: "Görev içeriği boş olamaz!" });
+    }
+
+    const yeniGorev = {
+        id: gorevler.length + 1,
+        metin: yeniGorevMetni
+    };
+
+    gorevler.push(yeniGorev);
+    console.log("Yeni görev eklendi:", yeniGorev);
+    
+    // Başarıyla oluşturuldu (201) mesajı dön
+    res.status(201).json(yeniGorev);
+});
+
 app.listen(PORT, () => {
     console.log(`Sunucu http://localhost:${PORT} üzerinde hazır!`);
 });

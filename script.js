@@ -26,31 +26,41 @@ function selamlamaVer() {
     }
 }
 
-function gorevEkle() {
+async function gorevEkle() {
     const input = document.getElementById("todoInput");
-    const yeniGorev = input.value;
+    const yeniGorevMetni = input.value;
 
-    if (yeniGorev === "") {
+    if (yeniGorevMetni === "") {
         alert("Lütfen bir görev yazın!");
         return;
     }
 
-    const liste = document.getElementById("gorevListesi");
+    try {
+        // 1. Sunucuya POST isteği gönder
+        const cevap = await fetch('http://localhost:3000/api/tasks', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ metin: yeniGorevMetni })
+        });
 
-    // Yeni bir liste öğesi (li) oluştur
-    const li = document.createElement("li");
-    li.innerHTML = `
-        <span>${yeniGorev}</span>
-        <button class="sil-btn" onclick="this.parentElement.remove()">Sil</button>
-    `;
+        if (cevap.ok) {
+            const eklenenGorev = await cevap.json();
+            
+            // 2. Sunucu onay verirse ekrana ekle
+            const liste = document.getElementById("gorevListesi");
+            const li = document.createElement("li");
+            li.innerHTML = `<span>${eklenenGorev.metin}</span><button class="sil-btn">Sil</button>`;
+            liste.appendChild(li);
 
-    // Listeye ekle
-    liste.appendChild(li);
-
-    verileriKaydet();
-
-    // Kutuyu temizle
-    input.value = "";
+            // Kutuyu temizle
+            input.value = "";
+            console.log("Sunucuya başarıyla kaydedildi.");
+        }
+    } catch (hata) {
+        console.error("Görev gönderilirken hata oluştu:", hata);
+    }
 }
 
 function verileriKaydet() {
