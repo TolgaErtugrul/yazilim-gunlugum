@@ -40,3 +40,19 @@ app.post('/api/tasks', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Sunucu http://localhost:${PORT} üzerinde hazır!`);
 });
+
+// Görev silme (DELETE)
+app.delete('/api/tasks/:id', (req, res) => {
+    const silinecekId = parseInt(req.params.id); // URL'den gelen ID'yi sayıya çevir
+    
+    // Listeyi filtrele (bu ID'ye sahip olmayanı tut, olanı at)
+    const yeniListe = gorevler.filter(g => g.id !== silinecekId);
+    
+    if (yeniListe.length === gorevler.length) {
+        return res.status(404).json({ hata: "Görev bulunamadı!" });
+    }
+
+    gorevler = yeniListe;
+    console.log(`ID: ${silinecekId} olan görev silindi.`);
+    res.json({ mesaj: "Görev başarıyla silindi." });
+});

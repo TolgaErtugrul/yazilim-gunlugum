@@ -51,7 +51,10 @@ async function gorevEkle() {
             // 2. Sunucu onay verirse ekrana ekle
             const liste = document.getElementById("gorevListesi");
             const li = document.createElement("li");
-            li.innerHTML = `<span>${eklenenGorev.metin}</span><button class="sil-btn">Sil</button>`;
+            li.innerHTML = `
+                <span>${gorev.metin}</span>
+                <button class="sil-btn" onclick="gorevSil(${gorev.id}, this)">Sil</button>
+            `;
             liste.appendChild(li);
 
             // Kutuyu temizle
@@ -125,7 +128,10 @@ async function sunucudanGorevleriGetir() {
         // Gelen verileri ekrana bas
         veriler.forEach(gorev => {
             const li = document.createElement("li");
-            li.innerHTML = `<span>${gorev.metin}</span><button class="sil-btn">Sil</button>`;
+            li.innerHTML = `
+                <span>${gorev.metin}</span>
+                <button class="sil-btn" onclick="gorevSil(${gorev.id}, this)">Sil</button>
+            `;
             liste.appendChild(li);
         });
     } catch (hata) {
@@ -135,3 +141,19 @@ async function sunucudanGorevleriGetir() {
 
 // Sayfa yüklendiğinde bu fonksiyonu çalıştır
 window.addEventListener("DOMContentLoaded", sunucudanGorevleriGetir);
+
+async function gorevSil(id, butonElementi) {
+    try {
+        const cevap = await fetch(`http://localhost:3000/api/tasks/${id}`, {
+            method: 'DELETE'
+        });
+
+        if (cevap.ok) {
+            // Sunucu onay verirse, HTML'den o satırı kaldır
+            butonElementi.parentElement.remove();
+            console.log("Görev sunucudan ve arayüzden silindi.");
+        }
+    } catch (hata) {
+        console.error("Silme işlemi sırasında hata:", hata);
+    }
+}
