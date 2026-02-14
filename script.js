@@ -52,8 +52,8 @@ async function gorevEkle() {
             const liste = document.getElementById("gorevListesi");
             const li = document.createElement("li");
             li.innerHTML = `
-                <span>${gorev.metin}</span>
-                <button class="sil-btn" onclick="gorevSil(${gorev.id}, this)">Sil</button>
+                <span>${eklenenGorev.metin}</span>
+                <button class="sil-btn" onclick="gorevSil(${eklenenGorev.id}, this)">Sil</button>
             `;
             liste.appendChild(li);
 
@@ -76,20 +76,6 @@ function verileriKaydet() {
     // Diziyi metne çevirip (JSON) hafızaya atalım
     localStorage.setItem("benimGorevlerim", JSON.stringify(gorevler));
 }
-
-window.onload = function() {
-    const kaydedilenler = localStorage.getItem("benimGorevlerim");
-    if (kaydedilenler) {
-        const gorevDizisi = JSON.parse(kaydedilenler);
-        const liste = document.getElementById("gorevListesi");
-        
-        gorevDizisi.forEach(gorevMetni => {
-            const li = document.createElement("li");
-            li.innerHTML = `<span>${gorevMetni}</span><button class="sil-btn" onclick="this.parentElement.remove(); verileriKaydet();">Sil</button>`;
-            liste.appendChild(li);
-        });
-    }
-};
 
 function temaDegistir() {
     const body = document.body;
@@ -139,9 +125,6 @@ async function sunucudanGorevleriGetir() {
     }
 }
 
-// Sayfa yüklendiğinde bu fonksiyonu çalıştır
-window.addEventListener("DOMContentLoaded", sunucudanGorevleriGetir);
-
 async function gorevSil(id, butonElementi) {
     try {
         const cevap = await fetch(`http://localhost:3000/api/tasks/${id}`, {
@@ -157,3 +140,9 @@ async function gorevSil(id, butonElementi) {
         console.error("Silme işlemi sırasında hata:", hata);
     }
 }
+
+// Sadece sunucudan çekme ve tema kontrolü kalsın
+window.addEventListener("DOMContentLoaded", () => {
+    sunucudanGorevleriGetir();
+    // Tema kontrolü kodun...
+});

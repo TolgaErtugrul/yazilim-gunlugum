@@ -26,7 +26,7 @@ app.post('/api/tasks', (req, res) => {
     }
 
     const yeniGorev = {
-        id: gorevler.length + 1,
+        id: Date.now(),
         metin: yeniGorevMetni
     };
 
