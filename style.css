@@ -1,101 +1,76 @@
+/* 1. DEĞİŞKENLER (Merkezi Kontrol Paneli) */
 :root {
-    /* Aydınlık Mod */
     --bg-color: #f4f4f4;
     --text-color: #333333;
     --header-bg: #2c3e50;
     --header-text: #ffffff;
     --card-bg: #ffffff;
     --accent-color: #3498db;
+    --border-color: #ddd;
 }
 
-/* Karanlık Mod Renkleri (Bu sınıf gövdeye eklenince aktif olacak) */
 body.dark-theme {
-    /* Karanlık Mod */
     --bg-color: #1a1a1a;
     --text-color: #f4f4f4;
     --header-bg: #000000;
     --header-text: #f1c40f;
     --card-bg: #2d2d2d;
     --accent-color: #f1c40f;
+    --border-color: #444;
 }
 
-/* GENEL AYARLAR - Sabit renkleri kaldırıp değişkenleri bağlıyoruz */
+/* 2. GENEL AYARLAR */
 body {
-    background-color: var(--bg-color) !important; /* !important ile kesinlik kazandırıyoruz */
+    background-color: var(--bg-color);
     color: var(--text-color);
-    font-family: 'Segoe UI', sans-serif;
-    transition: all 0.3s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
     margin: 0;
     padding: 20px;
+    transition: all 0.3s ease;
 }
 
 header {
     background-color: var(--header-bg);
-    color: var(--header-text); /* Başlık rengini değişkene bağladık */
+    color: var(--header-text);
     padding: 20px;
     border-radius: 8px;
     text-align: center;
+    margin-bottom: 20px;
 }
 
-/* Kart yapıları (Form ve Todo List) */
-#todo-section, form, section {
-    background-color: var(--card-bg);
-    color: var(--text-color);
+h1, h2, h3 {
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 10px;
+    color: var(--text-color); /* Başlıklar da temaya uyum sağlasın */
+}
+
+/* 3. LAYOUT (Dizilim) */
+main {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+section {
+    flex: 1;
+    min-width: 300px;
+    background-color: var(--card-bg); /* Değişkene bağladık */
     padding: 20px;
     border-radius: 10px;
-    margin-bottom: 20px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-/* Tüm sayfa için genel ayarlar */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    background-color: #f4f4f4; /* Hafif gri bir arka plan */
-    color: #333; /* Koyu gri yazı rengi */
-    margin: 0;
-    padding: 20px;
-}
-
-/* Başlıkları renklendirelim */
-h1, h2 {
-    color: #2c3e50;
-    border-bottom: 2px solid #3498db; /* Altlarına mavi bir çizgi */
-    padding-bottom: 10px;
-}
-
-/* Tabloyu modernleştirelim */
-/* Tabloyu da karanlık moda uyumlu yapalım */
-table {
-    width: 100%;
-    background-color: var(--card-bg);
-    color: var(--text-color);
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: var(--accent-color);
-    color: white;
-}
-
-td {
-    border-bottom: 1px solid #555; /* Karanlıkta da görünen ince çizgi */
-}
-
-/* Menü linklerini yan yana dizelim */
+/* 4. BİLEŞENLER (Components) */
 nav {
     display: flex;
-    justify-content: center; /* Merkeze al */
-    gap: 20px;               /* Linkler arası boşluk */
+    justify-content: center;
+    gap: 20px;
     background: #2c3e50;
     padding: 10px;
     border-radius: 8px;
+    margin-top: 10px;
 }
 
 nav a {
@@ -104,95 +79,71 @@ nav a {
     font-weight: bold;
 }
 
-/* Form elemanlarını düzenli bir kutuya alalım */
 form {
     display: flex;
-    flex-direction: column; /* Üst üste dizilsinler */
-    max-width: 300px;       /* Form çok genişlemesin */
+    flex-direction: column;
+    max-width: 300px;
     gap: 10px;
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Hafif gölge */
-}
-
-/* Masaüstü görünümü için yan yana dizilim örneği */
-main {
-    display: flex;
-    flex-wrap: wrap; /* Ekran daralırsa alt satıra geç */
-    gap: 30px;
-    margin-top: 20px;
-}
-
-section {
-    flex: 1;         /* Bölümlerin eşit alan kaplamasını sağla */
-    min-width: 300px; /* Çok küçülürlerse alt alta geçsinler */
 }
 
 button {
-    background-color: #3498db;
+    background-color: var(--accent-color);
     color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background 0.3s ease; /* Yumuşak geçiş */
+    transition: all 0.3s ease;
 }
 
 button:hover {
-    background-color: #2980b9; /* Üzerine gelince koyulaş */
-    transform: scale(1.05);    /* Çok hafif büyüme efekti */
-}
-
-/* Ekran genişliği 768px'den küçükse (Tablet ve Telefonlar için) */
-@media (max-width: 768px) {
-    main {
-        flex-direction: column; /* Yan yana olan bölümleri alt alta getir */
-    }
-
-    nav {
-        flex-direction: column; /* Menü linklerini alt alta diz */
-        align-items: center;
-    }
-
-    section {
-        width: 100%; /* Bölümler tüm genişliği kaplasın */
-    }
-
-    table {
-        display: block;
-        overflow-x: auto; /* Tablo geniş gelirse sağa kaysın, taşmasın */
-    }
-}
-
-#todo-section {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-}
-
-#gorevListesi {
-    list-style: none;
-    padding: 0;
-}
-
-#gorevListesi li {
-    background: #f9f9f9;
-    margin-top: 5px;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-left: 4px solid #3498db;
+    filter: brightness(1.2); /* Üzerine gelince rengi biraz açar */
+    transform: scale(1.05);
 }
 
 .sil-btn {
     background: #e74c3c;
-    color: white;
-    border: none;
     padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 3px;
+}
+
+/* 5. TO-DO LİSTESİ ÖZEL */
+#gorevListesi {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+#gorevListesi li {
+    background: var(--bg-color); /* Sayfa arka planıyla uyumlu olsun */
+    margin-top: 10px;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 5px solid var(--accent-color);
+    border-radius: 5px;
+}
+
+/* 6. TABLO AYARLARI */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+th {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+/* 7. RESPONSIVE (Mobil) */
+@media (max-width: 768px) {
+    main { flex-direction: column; }
+    nav { flex-direction: column; align-items: center; }
+    table { display: block; overflow-x: auto; }
 }
