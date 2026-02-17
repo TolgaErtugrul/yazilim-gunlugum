@@ -1,58 +1,44 @@
+require('dotenv').config();
 const express = require('express');
-const cors = require('cors'); // CORS'u içeri al
-const app = express();
-const PORT = 3000;
+const mongoose = require('mongoose');
+const cors = require('cors');
 
-app.use(cors()); // Tüm isteklere izin ver (Geliştirme aşaması için)
+const app = express();
+app.use(cors());
 app.use(express.json());
 
-// Sunucuda saklanan geçici veri (Veritabanı gelene kadar burada)
-let gorevler = [
-    { id: 1, metin: "Backend'den gelen ilk görev" },
-    { id: 2, metin: "Fetch API öğreniliyor" }
-];
+// 1. MongoDB Bağlantısı
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log("MongoDB Bağlantısı Başarılı! ✅"))
+    .catch(err => console.error("Bağlantı Hatası:", err));
 
-// Görevleri listeleme (GET)
-app.get('/api/tasks', (req, res) => {
-    res.json(gorevler);
+// 2. Veri Şeması (Model) Tanımlama
+const TaskSchema = new mongoose.Schema({
+    metin: { type: String, required: true },
+    tarih: { type: Date, default: Date.now }
+});
+const Task = mongoose.model('Task', TaskSchema);
+
+// 3. Rotaları Güncelleyelim
+
+// Verileri Getir (GET)
+app.get('/api/tasks', async (req, res) => {
+    const gorevler = await Task.find();
+    res.json(gorevler.map(g => ({ id: g._id, metin: g.metin }))); // MongoDB _id kullanır
 });
 
-// Yeni görev ekleme (POST)
-app.post('/api/tasks', (req, res) => {
-    const yeniGorevMetni = req.body.metin;
-    
-    if (!yeniGorevMetni) {
-        return res.status(400).json({ hata: "Görev içeriği boş olamaz!" });
-    }
-
-    const yeniGorev = {
-        id: Date.now(),
-        metin: yeniGorevMetni
-    };
-
-    gorevler.push(yeniGorev);
-    console.log("Yeni görev eklendi:", yeniGorev);
-    
-    // Başarıyla oluşturuldu (201) mesajı dön
-    res.status(201).json(yeniGorev);
+// Yeni Görev Ekle (POST)
+app.post('/api/tasks', async (req, res) => {
+    const yeniGorev = new Task({ metin: req.body.metin });
+    await yeniGorev.save();
+    res.status(201).json({ id: yeniGorev._id, metin: yeniGorev.metin });
 });
 
-app.listen(PORT, () => {
-    console.log(`Sunucu http://localhost:${PORT} üzerinde hazır!`);
+// Görev Sil (DELETE)
+app.delete('/api/tasks/:id', async (req, res) => {
+    await Task.findByIdAndDelete(req.params.id);
+    res.json({ mesaj: "Silindi" });
 });
 
-// Görev silme (DELETE)
-app.delete('/api/tasks/:id', (req, res) => {
-    const silinecekId = parseInt(req.params.id); // URL'den gelen ID'yi sayıya çevir
-    
-    // Listeyi filtrele (bu ID'ye sahip olmayanı tut, olanı at)
-    const yeniListe = gorevler.filter(g => g.id !== silinecekId);
-    
-    if (yeniListe.length === gorevler.length) {
-        return res.status(404).json({ hata: "Görev bulunamadı!" });
-    }
-
-    gorevler = yeniListe;
-    console.log(`ID: ${silinecekId} olan görev silindi.`);
-    res.json({ mesaj: "Görev başarıyla silindi." });
-});
+const PORT = 3000;
+app.listen(PORT, () => console.log(`Server ${PORT} üzerinde çalışıyor.`));
